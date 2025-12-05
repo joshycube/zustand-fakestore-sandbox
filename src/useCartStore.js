@@ -23,16 +23,19 @@ export const useCartStore = create((set) => ({
       cart: state.cart.products.filter((item) => item.productId !== itemId)
     })),
 
-  completeItem: (itemId) =>
+  completeCartItem: (itemId) =>
     set((state) => ({
-      cart: state.cart.products.map((item) => {
-        if (item.id === itemId) {
-          return {
-            ...item,
-            isCompleted: true
-          };
-        }
-        return cart;
-      })
+      ...state.cart,
+      cart: {
+        products: state.cart.products.map((item) => {
+          if (item.productId === itemId) {
+            return {
+              ...item,
+              isCompleted: true
+            };
+          }
+          return item;
+        })
+      }
     }))
 }));

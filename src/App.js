@@ -6,9 +6,7 @@ import CartComponent from "./CartComponent";
 export default function App() {
   return (
     <div className="App">
-      <h1>Todo list App with Zustand</h1>
-      <TodoList />
-      <AnotherComponent />
+      <h1>Shopping cart</h1>
       <CartComponent />
     </div>
   );
