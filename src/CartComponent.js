@@ -3,7 +3,7 @@ import { useCartStore } from "./useCartStore";
 import "./CartComponent.css";
 
 export default function CartComponent() {
-  const { cart, fetchCart, products, fetchAllProducts } = useCartStore();
+  const { cart, deleteAllItems, deleteItem, fetchCart, products, fetchAllProducts } = useCartStore();
 
   useEffect(() => {
     fetchCart();
@@ -12,13 +12,17 @@ export default function CartComponent() {
 
   console.log("Cart state - in component:", cart);
 
-  if (!cart || !cart?.products?.length > 0) {
+  if (!cart) {
     return <div>Loading cart...</div>;
+  }
+
+  if(cart && !cart?.products?.length > 0) {
+    return <div>Add something to your cart</div>
   }
 
   return (
     <div>
-      <h2>Cart</h2>
+      <h2>Cart</h2><button onClick={() => deleteAllItems()}>Empty cart</button>
       <ul>
         {cart.products.map((cartItem) => {
           const product = products.find(
@@ -30,7 +34,7 @@ export default function CartComponent() {
               key={cartItem.productId}
               className={cartItem.isCompleted ? "completed-fading" : ""}
             >
-              <span>{product.title}</span>
+              <span>{product.title}</span><button onClick={() => deleteItem(product.id)}>Delete</button>
             </li>
           );
         })}
