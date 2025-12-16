@@ -1,0 +1,17 @@
+.completed-fading {
+  text-decoration: line-through;
+  opacity: 1;
+  animation-name: fadeInOpacityOut;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeInOpacityOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

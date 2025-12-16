@@ -1,0 +1,22 @@
+#shopping-list-title {
+  font-weight: bold;
+  font-size: 25px;
+  margin-top: 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: row;
+  gap: 1px;
+}
+
+#new-todo {
+  height: 20px;
+}

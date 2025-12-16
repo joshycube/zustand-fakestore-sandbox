@@ -3,24 +3,42 @@ import { uid } from "react-uid";
 
 export const useCartStore = create((set) => ({
   cart: {},
+  products: [],
 
   fetchCart: async () => {
-    const response = await fetch('https://fakestoreapi.com/carts/1');
+    const response = await fetch("https://fakestoreapi.com/carts/1");
     const data = await response.json();
     set((state) => ({
       cart: {
         ...state.cart,
         products: data.products.map((item) => ({
           ...item,
-          isCompleted: false
-        }))
-      }
+          isCompleted: false,
+        })),
+      },
     }));
   },
 
+  fetchAllProducts: async () => {
+    const response = await fetch("https://fakestoreapi.com/products");
+    const data = await response.json();
+    set({ products: data });
+  },
+
+  addToCart: (productId) =>
+    set((state) => ({
+      cart: {
+        ...state.cart,
+        products: [
+          ...(state.cart.products || []),
+          { productId: productId, quantity: 1, isCompleted: false },
+        ],
+      },
+    })),
+
   deleteItem: (itemId) =>
     set((state) => ({
-      cart: state.cart.products.filter((item) => item.productId !== itemId)
+      cart: state.cart.products.filter((item) => item.productId !== itemId),
     })),
 
   completeCartItem: (itemId) =>
@@ -31,11 +49,11 @@ export const useCartStore = create((set) => ({
           if (item.productId === itemId) {
             return {
               ...item,
-              isCompleted: true
+              isCompleted: true,
             };
           }
           return item;
-        })
-      }
-    }))
+        }),
+      },
+    })),
 }));
