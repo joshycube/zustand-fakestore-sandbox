@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ErrorBoundary } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import TodoList from "./TodoList";
 import ProductsPage from "./ProductsPage";
@@ -14,14 +14,7 @@ export default function App() {
         </nav>
 
         <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <TodoList />
-              </>
-            }
-          />
+          <Route path="/" element={<TodoList />} />
           <Route path="/products" element={<ProductsPage />} />
         </Routes>
       </div>

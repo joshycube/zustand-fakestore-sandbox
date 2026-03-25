@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useCartStore } from "./useCartStore";
 import CartComponent from "./CartComponent";
+import "./ProductsPage.css";
 
 export default function ProductsPage() {
   const { products, fetchAllProducts, addToCart } = useCartStore();
@@ -13,14 +14,21 @@ export default function ProductsPage() {
     <>
       <div>
         <h2>All Products</h2>
-        <ul>
+        <div className="products-grid">
           {products.map((product) => (
-            <li key={product.id}>
-              <strong>{product.title}</strong> - ${product.price}
+            <div key={product.id} className="product-card">
+              <strong className="product-title">{product.title}</strong>
+              <img
+                src={product.image}
+                alt={product.title}
+                className="product-image"
+              />
+              <p className="product-description">{product.description}</p>
+              <p className="product-price">${product.price}</p>
               <button onClick={() => addToCart(product.id)}>Add to Cart</button>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
       <CartComponent />
     </>
