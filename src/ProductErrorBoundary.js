@@ -15,6 +15,14 @@ class ProductErrorBoundary extends React.Component {
     console.error("Error:", error.message, info.componentStack);
   }
 
+  handleRetry = () => {
+    try {
+      this.setState({ hasError: false, error: null });
+    } catch (error) {
+      console.error("Retry has failed:", error);
+    }
+  };
+
   render() {
     if (this.state.hasError) {
       return (
