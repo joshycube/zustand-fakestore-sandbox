@@ -1,14 +1,29 @@
-test("should filter products by category", () => {
-  const products = [
-    { id: 1, category: "electronics", title: "Laptop" },
-    { id: 2, category: "electronics", title: "Phone" },
-    { id: 3, category: "clothing", title: "Shirt" },
-  ];
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import ProductsPage from "../ProductsPage";
 
-  const selectedCategory = "electronics";
-  const filtered = products.filter((p) => p.category === selectedCategory);
+const products = [
+  { id: 1, category: "electronics", title: "Laptop" },
+  { id: 2, category: "electronics", title: "Phone" },
+  { id: 3, category: "clothing", title: "Shirt" },
+];
 
-  expect(filtered).toHaveLength(2);
-  expect(filtered[0].title).toBe("Laptop");
-  expect(filtered[1].title).toBe("Phone");
+jest.mock("../useCartStore", () => ({
+  useCartStore: () => ({
+    products,
+    fetchAllProducts: jest.fn(),
+    addToCart: jest.fn(),
+  }),
+}));
+
+test("should render only electronics products when 'electronics' is selected", () => {
+  render(<ProductsPage />);
+
+  const select = screen.getByTestId("category-select");
+  fireEvent.change(select, { target: { value: "electronics" } });
+
+  expect(screen.getByText("Laptop")).toBeInTheDocument();
+  expect(screen.getByText("Phone")).toBeInTheDocument();
+  expect(screen.queryByText("Shirt")).not.toBeInTheDocument();
 });

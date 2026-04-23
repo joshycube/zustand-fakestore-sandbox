@@ -23,6 +23,7 @@ export default function ProductsPage() {
         <label id="category-filter">
           Filter by category:
           <select
+            data-testid="category-select"
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
           >
